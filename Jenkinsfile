@@ -12,7 +12,7 @@ pipeline {
         stage('Install Dependencies - Server') {
             steps {
                 dir('server') {
-                    sh 'npm install'
+                    sh ''
                 }
             }
         }
@@ -21,7 +21,7 @@ pipeline {
             steps {
                 dir('server') {
                     sh "ls"
-                    sh 'node app.js'
+                    sh ''
                 }
             }
         }
