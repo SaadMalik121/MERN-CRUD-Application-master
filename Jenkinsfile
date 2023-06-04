@@ -29,7 +29,7 @@ pipeline {
         stage('Install Dependencies - Client') {
             steps {
                 dir('client') {
-                    sh 'npm install'
+                    sh ''
                 }
             }
         }
@@ -37,7 +37,7 @@ pipeline {
         stage('Run Client') {
             steps {
                 dir('client') {
-                    sh 'npm start'
+                    sh ''
                 }
             }
         }
