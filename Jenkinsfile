@@ -20,7 +20,7 @@ pipeline {
         stage('Run Server') {
             steps {
                 dir('server') {
-                    sh "ls
+                    sh "ls"
                     sh 'node app.js'
                 }
             }
