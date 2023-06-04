@@ -10,7 +10,7 @@ const dotenv = require("dotenv").config();
 const mongoURL = process.env.MONGO_URL;
 mongoose.Promise = require("bluebird");
 mongoose
-  .connect("mongodb+srv://saadqadeersq:malik914425@chatapp.qlpjkef.mongodb.net/MERNJenkin")
+  .connect("mongodb://0.0.0.0:27017/CrudDB")
   .then(() => {
     console.log("Start");
   })
