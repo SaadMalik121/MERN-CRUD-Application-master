@@ -2,43 +2,56 @@ pipeline {
     agent any
     
     stages {
-        stage('Build') {
+        stage('Install Node and NPM') {
             steps {
-                echo 'Building...'
-                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
-                    // Add a 20-second wait in the build stage
-                    sleep time: 20, unit: 'SECONDS'
+                // Install Node.js and NPM on the Jenkins agent
+                tool 'NodeJS'
+            }
+        }
+        
+        stage('Frontend Build') {
+            steps {
+                dir('frontend') {
+                    // Change directory to frontend folder
+                    echo 'Building frontend...'
                     
-                    // Your build steps here
-                    sh 'mvn clean install'
+                    // Install frontend dependencies
+                    sh 'npm install'
+                    
+                    // Build frontend
+                    sh 'npm run build'
                 }
             }
         }
         
-        stage('Test') {
+        stage('Backend Build') {
             steps {
-                echo 'Running test...'
-                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
-                    // Add a 30-second wait in the testing stage
-                    sleep time: 30, unit: 'SECONDS'
+                dir('backend') {
+                    // Change directory to backend folder
+                    echo 'Building backend...'
                     
-                    // Your test steps here
-                    // Example test case that always passes
-                    sh '''
-                    cat > Test.java <<EOF
-                    import org.junit.Test;
-                    import static org.junit.Assert.assertTrue;
-
-                    public class Test {
-                        @Test
-                        public void testAlwaysPasses() {
-                            assertTrue(true);
-                        }
-                    }
-                    EOF
-                    javac -cp junit.jar Test.java
-                    java -cp .:junit.jar:hamcrest.jar org.junit.runner.JUnitCore Test
-                    '''
+                    // Install backend dependencies
+                    sh 'npm install'
+                }
+            }
+        }
+        
+        stage('Run Application') {
+            steps {
+                dir('backend') {
+                    // Change directory to backend folder
+                    echo 'Running application...'
+                    
+                    // Start the backend server
+                    sh 'node app.js &'
+                }
+                
+                dir('frontend') {
+                    // Change directory to frontend folder
+                    echo 'Starting frontend...'
+                    
+                    // Start the frontend server
+                    sh 'npm start'
                 }
             }
         }
