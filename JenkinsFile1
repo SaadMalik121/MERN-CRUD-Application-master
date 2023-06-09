@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Frontend Build') {
             steps {
-                dir('frontend') {
+                dir('client') {
                     echo 'Building frontend...'
                     
                     // Install frontend dependencies
@@ -18,7 +18,7 @@ pipeline {
         
         stage('Backend Build') {
             steps {
-                dir('backend') {
+                dir('server') {
                     echo 'Building backend...'
                     
                     // Install backend dependencies
@@ -29,14 +29,14 @@ pipeline {
         
         stage('Run Application') {
             steps {
-                dir('backend') {
+                dir('server') {
                     echo 'Running application...'
                     
                     // Start the backend server
                     sh 'node app.js &'
                 }
                 
-                dir('frontend') {
+                dir('client') {
                     echo 'Starting frontend...'
                     
                     // Start the frontend server
