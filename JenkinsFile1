@@ -2,17 +2,9 @@ pipeline {
     agent any
     
     stages {
-        stage('Install Node and NPM') {
-            steps {
-                // Install Node.js and NPM on the Jenkins agent
-                tool 'NodeJS'
-            }
-        }
-        
         stage('Frontend Build') {
             steps {
                 dir('frontend') {
-                    // Change directory to frontend folder
                     echo 'Building frontend...'
                     
                     // Install frontend dependencies
@@ -27,7 +19,6 @@ pipeline {
         stage('Backend Build') {
             steps {
                 dir('backend') {
-                    // Change directory to backend folder
                     echo 'Building backend...'
                     
                     // Install backend dependencies
@@ -39,7 +30,6 @@ pipeline {
         stage('Run Application') {
             steps {
                 dir('backend') {
-                    // Change directory to backend folder
                     echo 'Running application...'
                     
                     // Start the backend server
@@ -47,7 +37,6 @@ pipeline {
                 }
                 
                 dir('frontend') {
-                    // Change directory to frontend folder
                     echo 'Starting frontend...'
                     
                     // Start the frontend server
