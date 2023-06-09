@@ -5,8 +5,10 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building...'
-                // Always mark the build as successful
                 catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                    // Add a 20-second wait in the build stage
+                    sleep time: 20, unit: 'SECONDS'
+                    
                     // Your build steps here
                     sh 'mvn clean install'
                 }
@@ -16,8 +18,10 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running test...'
-                // Always mark the test stage as successful
                 catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                    // Add a 30-second wait in the testing stage
+                    sleep time: 30, unit: 'SECONDS'
+                    
                     // Your test steps here
                     // Example test case that always passes
                     sh '''
